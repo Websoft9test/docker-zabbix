@@ -1,3 +1,2 @@
-docker-compose.yml
-script/test.sh
-docker
+docker-compose_v3_alpine_mysql_latest.yaml
+env_vars

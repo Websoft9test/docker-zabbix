@@ -1,7 +1,7 @@
 version: '3.8'
 services:
  zabbix-server:
-  image: zabbix/zabbix-server-mysql:centos-5.4-${APP_VERSION}
+  image: zabbix/zabbix-server-mysql:centos-5.0-${APP_VERSION}
   container_name: ${APP_CONTAINER_NAME}-server
   restart: always
   ports:
@@ -56,7 +56,7 @@ services:
    com.zabbix.os: "centos"
 
  zabbix-web-apache-mysql:
-  image: zabbix/zabbix-web-apache-mysql:centos-5.4-${APP_VERSION}
+  image: zabbix/zabbix-web-apache-mysql:centos-5.0-${APP_VERSION}
   container_name: ${APP_CONTAINER_NAME}-web
   restart: always
   ports:
@@ -75,13 +75,13 @@ services:
       memory: 512M
     reservations:
       memory: 256M
+  env_file:
+   - ./src/env_vars/.env_web
   environment:
    - DB_SERVER_HOST=${DB_MYSQL_HOST}
    - DB_SERVER_PORT=${DB_MYSQL_PORT}
    - MYSQL_ROOT_PASSWORD=${DB_MYSQL_PASSWORD}
    - MYSQL_PASSWORD=${DB_MYSQL_PASSWORD}
-  env_file:
-   - ./src/env_vars/.env_web
   depends_on:
    - mysql-server
    - zabbix-server
@@ -103,7 +103,7 @@ services:
    com.zabbix.os: "centos"
 
  zabbix-agent:
-  image: zabbix/zabbix-agent:centos-5.4-${APP_VERSION}
+  image: zabbix/zabbix-agent:centos-5.0-${APP_VERSION}
   container_name: ${APP_CONTAINER_NAME}-agent
   restart: always
   ports:
@@ -116,7 +116,6 @@ services:
    - ${VOLUMES_PATH_PREFIX}/var/lib/zabbix/enc:/var/lib/zabbix/enc:ro
    - ${VOLUMES_PATH_PREFIX}/var/lib/zabbix/ssh_keys:/var/lib/zabbix/ssh_keys:ro
   links:
-   - mysql-server:mysql-server
    - zabbix-server:zabbix-server
   deploy:
    resources:
@@ -137,7 +136,7 @@ services:
    com.zabbix.os: "centos"
 
  zabbix-java-gateway:
-  image: zabbix/zabbix-java-gateway:centos-5.4-${APP_VERSION}
+  image: zabbix/zabbix-java-gateway:centos-5.0-${APP_VERSION}
   container_name: ${APP_CONTAINER_NAME}-java
   restart: always
   ports:
@@ -158,7 +157,7 @@ services:
    com.zabbix.os: "centos"
 
  zabbix-snmptraps:
-  image: zabbix/zabbix-snmptraps:centos-5.4-${APP_VERSION}
+  image: zabbix/zabbix-snmptraps:centos-5.0-${APP_VERSION}
   container_name: ${APP_CONTAINER_NAME}-snmptraps
   restart: always
   ports:
@@ -194,9 +193,9 @@ services:
   environment: 
    - DB_SERVER_HOST=${DB_MYSQL_HOST}
    - MYSQL_ROOT_PASSWORD=${DB_MYSQL_PASSWORD}
-   - DB_SERVER_PORT=${DB_MYSQL_PORT}
    - MYSQL_USER=${DB_MYSQL_USER}
    - MYSQL_PASSWORD=${DB_MYSQL_PASSWORD}
+   - DB_SERVER_PORT=${DB_MYSQL_PORT}
   security_opt:
    - seccomp:unconfined
   stop_grace_period: 1m

@@ -1,7 +1,7 @@
 version: '3.8'
 services:
  zabbix-server:
-  image: zabbix/zabbix-server-mysql:centos-5.4-${APP_VERSION}
+  image: zabbix/zabbix-server-mysql:centos-3.0-${APP_VERSION}
   container_name: ${APP_CONTAINER_NAME}-server
   restart: always
   ports:
@@ -11,7 +11,6 @@ services:
    - /etc/timezone:/etc/timezone:ro 
    - ${VOLUMES_PATH_PREFIX}/usr/lib/zabbix/alertscripts:/usr/lib/zabbix/alertscripts:ro
    - ${VOLUMES_PATH_PREFIX}/usr/lib/zabbix/externalscripts:/usr/lib/zabbix/externalscripts:ro
-   - ${VOLUMES_PATH_PREFIX}/var/lib/zabbix/export:/var/lib/zabbix/export:rw
    - ${VOLUMES_PATH_PREFIX}/var/lib/zabbix/modules:/var/lib/zabbix/modules:ro
    - ${VOLUMES_PATH_PREFIX}/var/lib/zabbix/enc:/var/lib/zabbix/enc:ro
    - ${VOLUMES_PATH_PREFIX}/var/lib/zabbix/ssh_keys:/var/lib/zabbix/ssh_keys:ro
@@ -56,16 +55,15 @@ services:
    com.zabbix.os: "centos"
 
  zabbix-web-apache-mysql:
-  image: zabbix/zabbix-web-apache-mysql:centos-5.4-${APP_VERSION}
+  image: zabbix/zabbix-web-apache-mysql:centos-3.0-${APP_VERSION}
   container_name: ${APP_CONTAINER_NAME}-web
   restart: always
   ports:
-   - "${APP_PORT}:8080"
+    - "${APP_PORT}:8080"
   volumes:
    - /etc/localtime:/etc/localtime:ro
    - /etc/timezone:/etc/timezone:ro
    - ${VOLUMES_PATH_PREFIX}/etc/ssl/apache2:/etc/ssl/apache2:ro
-   - ${VOLUMES_PATH_PREFIX}/usr/share/zabbix/modules/:/usr/share/zabbix/modules/:ro
   links:
    - mysql-server:mysql-server
    - zabbix-server:zabbix-server
@@ -75,13 +73,13 @@ services:
       memory: 512M
     reservations:
       memory: 256M
+  env_file:
+   - ./src/env_vars/.env_web
   environment:
    - DB_SERVER_HOST=${DB_MYSQL_HOST}
    - DB_SERVER_PORT=${DB_MYSQL_PORT}
    - MYSQL_ROOT_PASSWORD=${DB_MYSQL_PASSWORD}
    - MYSQL_PASSWORD=${DB_MYSQL_PASSWORD}
-  env_file:
-   - ./src/env_vars/.env_web
   depends_on:
    - mysql-server
    - zabbix-server
@@ -103,7 +101,7 @@ services:
    com.zabbix.os: "centos"
 
  zabbix-agent:
-  image: zabbix/zabbix-agent:centos-5.4-${APP_VERSION}
+  image: zabbix/zabbix-agent:centos-3.0-${APP_VERSION}
   container_name: ${APP_CONTAINER_NAME}-agent
   restart: always
   ports:
@@ -116,7 +114,6 @@ services:
    - ${VOLUMES_PATH_PREFIX}/var/lib/zabbix/enc:/var/lib/zabbix/enc:ro
    - ${VOLUMES_PATH_PREFIX}/var/lib/zabbix/ssh_keys:/var/lib/zabbix/ssh_keys:ro
   links:
-   - mysql-server:mysql-server
    - zabbix-server:zabbix-server
   deploy:
    resources:
@@ -137,7 +134,7 @@ services:
    com.zabbix.os: "centos"
 
  zabbix-java-gateway:
-  image: zabbix/zabbix-java-gateway:centos-5.4-${APP_VERSION}
+  image: zabbix/zabbix-java-gateway:centos-3.0-${APP_VERSION}
   container_name: ${APP_CONTAINER_NAME}-java
   restart: always
   ports:
@@ -158,7 +155,7 @@ services:
    com.zabbix.os: "centos"
 
  zabbix-snmptraps:
-  image: zabbix/zabbix-snmptraps:centos-5.4-${APP_VERSION}
+  image: zabbix/zabbix-snmptraps:centos-3.0-${APP_VERSION}
   container_name: ${APP_CONTAINER_NAME}-snmptraps
   restart: always
   ports:
@@ -179,24 +176,23 @@ services:
    com.zabbix.os: "centos"
 
  mysql-server:
-  image: mysql:${DB_MYSQL_VERSION}
+  image: mysql:5.7
   container_name: ${APP_CONTAINER_NAME}-mysql
   restart: always
   ports: 
-   - ${DB_MYSQL_PORT}:3306
+    - ${DB_MYSQL_PORT}:3306
   command:
    - mysqld
    - --character-set-server=utf8mb4
    - --collation-server=utf8mb4_bin
-   - --default-authentication-plugin=mysql_native_password
   volumes:
    - ${VOLUMES_PATH_PREFIX}/var/lib/mysql:/var/lib/mysql:rw
   environment: 
    - DB_SERVER_HOST=${DB_MYSQL_HOST}
    - MYSQL_ROOT_PASSWORD=${DB_MYSQL_PASSWORD}
-   - DB_SERVER_PORT=${DB_MYSQL_PORT}
    - MYSQL_USER=${DB_MYSQL_USER}
    - MYSQL_PASSWORD=${DB_MYSQL_PASSWORD}
+   - DB_SERVER_PORT=${DB_MYSQL_PORT}
   security_opt:
    - seccomp:unconfined
   stop_grace_period: 1m
