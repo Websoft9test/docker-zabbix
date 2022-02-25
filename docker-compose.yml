@@ -1,7 +1,7 @@
 version: '3.8'
 services:
  zabbix-server:
-  image: zabbix/zabbix-server-mysql:centos-5.4-${APP_VERSION}
+  image: zabbix/zabbix-server-mysql:centos-${APP_VERSION}-latest
   container_name: ${APP_CONTAINER_NAME}-server
   restart: always
   ports:
@@ -56,7 +56,7 @@ services:
    com.zabbix.os: "centos"
 
  zabbix-web-apache-mysql:
-  image: zabbix/zabbix-web-apache-mysql:centos-5.4-${APP_VERSION}
+  image: zabbix/zabbix-web-apache-mysql:centos-${APP_VERSION}-latest
   container_name: ${APP_CONTAINER_NAME}-web
   restart: always
   ports:
@@ -103,7 +103,7 @@ services:
    com.zabbix.os: "centos"
 
  zabbix-agent:
-  image: zabbix/zabbix-agent:centos-5.4-${APP_VERSION}
+  image: zabbix/zabbix-agent:centos-${APP_VERSION}-latest
   container_name: ${APP_CONTAINER_NAME}-agent
   restart: always
   ports:
@@ -137,7 +137,7 @@ services:
    com.zabbix.os: "centos"
 
  zabbix-java-gateway:
-  image: zabbix/zabbix-java-gateway:centos-5.4-${APP_VERSION}
+  image: zabbix/zabbix-java-gateway:centos-${APP_VERSION}-latest
   container_name: ${APP_CONTAINER_NAME}-java
   restart: always
   ports:
@@ -158,7 +158,7 @@ services:
    com.zabbix.os: "centos"
 
  zabbix-snmptraps:
-  image: zabbix/zabbix-snmptraps:centos-5.4-${APP_VERSION}
+  image: zabbix/zabbix-snmptraps:centos-${APP_VERSION}-latest
   container_name: ${APP_CONTAINER_NAME}-snmptraps
   restart: always
   ports:
