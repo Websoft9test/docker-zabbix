@@ -66,7 +66,7 @@ We assume that you are already familiar with Docker, and you can modify [docker-
 ```
 git clone --depth=1 https://github.com/Websoft9/docker-zabbix
 cd docker-zabbix
-docker-compose -f docker-compose.yml  --env-file  .env up -d
+docker-compose  up -d
 ```
 
 ### FAQ
@@ -79,7 +79,7 @@ You should modify ports at [docker-compose file](docker-compose-production.yml) 
 
 ### Usage instructions
 
-You can point your browser to: *`http://Instance's Internet IP:9006`*  
+You can point your browser to: *`http://Instance's Internet IP:port`*  
 
 The following is the information that may be needed during use
 
