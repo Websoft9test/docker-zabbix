@@ -1,5 +1,5 @@
-# image:
-# docs:
+# image: https://registry.hub.docker.com/r/zabbix/zabbix-server-mysql
+# docs: https://github.com/zabbix/zabbix-docker
 
 version: '3.8'
 
