@@ -13,13 +13,13 @@ services:
   volumes:
    - /etc/localtime:/etc/localtime:ro
    - /etc/timezone:/etc/timezone:ro 
-   - ${VOLUMES_PATH_PREFIX}/usr/lib/zabbix/alertscripts:/usr/lib/zabbix/alertscripts:ro
-   - ${VOLUMES_PATH_PREFIX}/usr/lib/zabbix/externalscripts:/usr/lib/zabbix/externalscripts:ro
-   - ${VOLUMES_PATH_PREFIX}/var/lib/zabbix/export:/var/lib/zabbix/export:rw
-   - ${VOLUMES_PATH_PREFIX}/var/lib/zabbix/modules:/var/lib/zabbix/modules:ro
-   - ${VOLUMES_PATH_PREFIX}/var/lib/zabbix/enc:/var/lib/zabbix/enc:ro
-   - ${VOLUMES_PATH_PREFIX}/var/lib/zabbix/ssh_keys:/var/lib/zabbix/ssh_keys:ro
-   - ${VOLUMES_PATH_PREFIX}/var/lib/zabbix/mibs:/var/lib/zabbix/mibs:ro
+   - zabbix_alertscripts:/usr/lib/zabbix/alertscripts:ro
+   - zabbix_externalscripts:/usr/lib/zabbix/externalscripts:ro
+   - zabbix_export:/var/lib/zabbix/export:rw
+   - zabbix_modules:/var/lib/zabbix/modules:ro
+   - zabbix_enc:/var/lib/zabbix/enc:ro
+   - zabbix_ssh_keys:/var/lib/zabbix/ssh_keys:ro
+   - zabbix_mibs:/var/lib/zabbix/mibs:ro
   volumes_from:
    - zabbix-snmptraps:ro
   links:
@@ -115,10 +115,10 @@ services:
   volumes:
    - /etc/localtime:/etc/localtime:ro
    - /etc/timezone:/etc/timezone:ro
-   - ${VOLUMES_PATH_PREFIX}/etc/zabbix/zabbix_agentd.d:/etc/zabbix/zabbix_agentd.d:ro
-   - ${VOLUMES_PATH_PREFIX}/var/lib/zabbix/modules:/var/lib/zabbix/modules:ro
-   - ${VOLUMES_PATH_PREFIX}/var/lib/zabbix/enc:/var/lib/zabbix/enc:ro
-   - ${VOLUMES_PATH_PREFIX}/var/lib/zabbix/ssh_keys:/var/lib/zabbix/ssh_keys:ro
+   - zabbix_agentd.d:/etc/zabbix/zabbix_agentd.d:ro
+   - zabbix_modules:/var/lib/zabbix/modules:ro
+   - zabbix_enc:/var/lib/zabbix/enc:ro
+   - zabbix_ssh_keys:/var/lib/zabbix/ssh_keys:ro
   links:
    - mysql-server:mysql-server
    - zabbix-server:zabbix-server
@@ -209,8 +209,21 @@ services:
   image: busybox
   container_name: ${APP_CONTAINER_NAME}-data
   volumes:
-   - /mysql:/var/lib/mysql:rw
+   - mysql:/var/lib/mysql:rw
 
 networks:
   default:
     name: ${APP_NAME}
+
+volumes:
+  seccomp:
+  mysql:
+  zabbix_agentd.d:
+  zabbix_modules:
+  zabbix_enc:
+  zabbix_ssh_keys:
+  zabbix_alertscripts:
+  zabbix_externalscripts:
+  zabbix_export:
+  zabbix_mibs:
+  
