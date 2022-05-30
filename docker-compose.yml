@@ -1,4 +1,8 @@
+# image:
+# docs:
+
 version: '3.8'
+
 services:
  zabbix-server:
   image: zabbix/zabbix-server-mysql:centos-${APP_VERSION}-latest
