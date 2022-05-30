@@ -23,7 +23,7 @@ services:
   volumes_from:
    - zabbix-snmptraps:ro
   links:
-   - mysql-server:mysql-server
+   - mysql:mysql
    - zabbix-java-gateway:zabbix-java-gateway
   ulimits:
    nproc: 65535
@@ -45,7 +45,7 @@ services:
    - MYSQL_PASSWORD=${DB_MYSQL_PASSWORD}
    - MYSQL_DATABASE=${DB_MYSQL_NAME}
   depends_on:
-   - mysql-server
+   - mysql
   stop_grace_period: 30s
   sysctls:
    - net.ipv4.ip_local_port_range=1024 65000
@@ -71,7 +71,7 @@ services:
    - ${VOLUMES_PATH_PREFIX}/etc/ssl/apache2:/etc/ssl/apache2:ro
    - ${VOLUMES_PATH_PREFIX}/usr/share/zabbix/modules:/usr/share/zabbix/modules:ro
   links:
-   - mysql-server:mysql-server
+   - mysql:mysql
    - zabbix-server:zabbix-server
   deploy:
    resources:
@@ -87,7 +87,7 @@ services:
   env_file:
    - ./src/env_vars/.env_web
   depends_on:
-   - mysql-server
+   - mysql
    - zabbix-server
   healthcheck:
    test: ["CMD", "curl", "-f", "http://localhost:8080/"]
