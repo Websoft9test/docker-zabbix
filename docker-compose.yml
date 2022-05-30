@@ -6,7 +6,7 @@ version: '3.8'
 services:
  zabbix-server:
   image: zabbix/zabbix-server-mysql:centos-${APP_VERSION}-latest
-  container_name: ${APP_CONTAINER_NAME}-server
+  container_name: ${APP_NAME}-server
   restart: always
   ports:
    - "10051:10051"
@@ -61,7 +61,7 @@ services:
 
  zabbix-web-apache-mysql:
   image: zabbix/zabbix-web-apache-mysql:centos-${APP_VERSION}-latest
-  container_name: ${APP_CONTAINER_NAME}-web
+  container_name: ${APP_NAME}-web
   restart: always
   ports:
    - "${APP_PORT}:8080"
@@ -108,7 +108,7 @@ services:
 
  zabbix-agent:
   image: zabbix/zabbix-agent:centos-${APP_VERSION}-latest
-  container_name: ${APP_CONTAINER_NAME}-agent
+  container_name: ${APP_NAME}-agent
   restart: always
   ports:
    - "10050:10050"
@@ -142,7 +142,7 @@ services:
 
  zabbix-java-gateway:
   image: zabbix/zabbix-java-gateway:centos-${APP_VERSION}-latest
-  container_name: ${APP_CONTAINER_NAME}-java
+  container_name: ${APP_NAME}-java
   restart: always
   ports:
    - "10052:10052"
@@ -168,7 +168,7 @@ services:
   ports:
    - "162:1162/udp"
   volumes:
-   - ${VOLUMES_PATH_PREFIX}/var/lib/zabbix/snmptraps:/var/lib/zabbix/snmptraps:rw
+   - snmptraps:/var/lib/zabbix/snmptraps:rw
   deploy:
    resources:
     limits:
@@ -182,9 +182,9 @@ services:
    com.zabbix.component: "snmptraps"
    com.zabbix.os: "centos"
 
- mysql-server:
+ mysql:
   image: mysql:${DB_MYSQL_VERSION}
-  container_name: ${APP_CONTAINER_NAME}-mysql
+  container_name: ${APP_CONTAINER_NAME}-db
   restart: always
   ports: 
    - ${DB_MYSQL_PORT}:3306
@@ -194,7 +194,7 @@ services:
    - --collation-server=utf8mb4_bin
    - --default-authentication-plugin=mysql_native_password
   volumes:
-   - ${VOLUMES_PATH_PREFIX}/var/lib/mysql:/var/lib/mysql:rw
+   - mysql:/var/lib/mysql:rw
   environment: 
    - DB_SERVER_HOST=${DB_MYSQL_HOST}
    - MYSQL_ROOT_PASSWORD=${DB_MYSQL_PASSWORD}
@@ -209,8 +209,8 @@ services:
   image: busybox
   container_name: ${APP_CONTAINER_NAME}-data
   volumes:
-   - ${VOLUMES_PATH_PREFIX}/var/lib/mysql:/var/lib/mysql:rw
+   - /mysql:/var/lib/mysql:rw
 
 networks:
   default:
-    name: ${APP_NETWORK}
+    name: ${APP_NAME}
