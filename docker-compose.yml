@@ -108,7 +108,7 @@ services:
    com.zabbix.webserver: "apache2"
    com.zabbix.dbtype: "mysql"
    com.zabbix.os: "centos"
-  #command: bash -c "cat /my_cmd > /cmd.sh && chmod +x /cmd.sh && /cmd.sh"
+  command: bash -c "cat /my_cmd > /cmd.sh && chmod +x /cmd.sh && /cmd.sh"
   configs:
     - source: my_cmd
 
