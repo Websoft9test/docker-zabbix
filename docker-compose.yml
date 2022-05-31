@@ -70,7 +70,7 @@ services:
    - /etc/timezone:/etc/timezone:ro
    - apache2:/etc/ssl/apache2:ro
    - zabbix_modules:/usr/share/zabbix/modules:ro
-   - docker-entrypoint.sh:/usr/bin/docker-entrypoint.sh
+   - ./docker-entrypoint.sh:/usr/bin/docker-entrypoint.sh
   links:
    - mysql:mysql
    - zabbix-server:zabbix-server
