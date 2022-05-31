@@ -16,4 +16,3 @@ do
        break
     fi
 done
-bash docker-entrypoint.sh
