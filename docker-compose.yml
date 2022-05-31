@@ -80,6 +80,7 @@ services:
     reservations:
       memory: 256M
   privileged: true
+  user: root
   environment:
    - DB_SERVER_HOST=${DB_MYSQL_HOST}
    - DB_SERVER_PORT=${DB_MYSQL_PORT}
