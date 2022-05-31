@@ -109,7 +109,6 @@ services:
    com.zabbix.webserver: "apache2"
    com.zabbix.dbtype: "mysql"
    com.zabbix.os: "centos"
-  configs:
 
 
  zabbix-agent:
