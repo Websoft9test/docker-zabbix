@@ -110,7 +110,7 @@ services:
    com.zabbix.dbtype: "mysql"
    com.zabbix.os: "centos"
   configs:
-    - source: my_cmd
+
 
  zabbix-agent:
   image: zabbix/zabbix-agent:centos-${APP_VERSION}-latest
@@ -234,6 +234,4 @@ volumes:
   zabbix_mibs:
   apache2:
 
-configs:
-  my_cmd:
-    file: ./cmd.sh
+
