@@ -21,7 +21,7 @@ services:
    - zabbix_ssh_keys:/var/lib/zabbix/ssh_keys:ro
    - zabbix_mibs:/var/lib/zabbix/mibs:ro
   volumes_from:
-   - zabbix-snmptraps:ro
+   - snmptraps:ro
   links:
    - mysql:mysql
    - zabbix-java-gateway:zabbix-java-gateway
