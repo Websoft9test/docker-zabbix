@@ -68,8 +68,8 @@ services:
   volumes:
    - /etc/localtime:/etc/localtime:ro
    - /etc/timezone:/etc/timezone:ro
-   - ${VOLUMES_PATH_PREFIX}/etc/ssl/apache2:/etc/ssl/apache2:ro
-   - ${VOLUMES_PATH_PREFIX}/usr/share/zabbix/modules:/usr/share/zabbix/modules:ro
+   - apache2:/etc/ssl/apache2:ro
+   - zabbix_modules:/usr/share/zabbix/modules:ro
   links:
    - mysql:mysql
    - zabbix-server:zabbix-server
@@ -226,4 +226,4 @@ volumes:
   zabbix_externalscripts:
   zabbix_export:
   zabbix_mibs:
-  
+  apache2:
