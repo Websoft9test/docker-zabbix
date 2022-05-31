@@ -79,6 +79,7 @@ services:
       memory: 512M
     reservations:
       memory: 256M
+  privileged: true
   environment:
    - DB_SERVER_HOST=${DB_MYSQL_HOST}
    - DB_SERVER_PORT=${DB_MYSQL_PORT}
