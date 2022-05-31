@@ -89,10 +89,6 @@ services:
   depends_on:
    - mysql
    - zabbix-server
-   - zabbix-snmptraps
-   - db_data_mysql
-   - zabbix-java-gateway
-   - zabbix-agent
   healthcheck:
    test: ["CMD", "curl", "-f", "http://localhost:8080/"]
    interval: 10s
