@@ -120,7 +120,7 @@ services:
    - zabbix_enc:/var/lib/zabbix/enc:ro
    - zabbix_ssh_keys:/var/lib/zabbix/ssh_keys:ro
   links:
-   - mysql-server:mysql-server
+   - mysql:mysql
    - zabbix-server:zabbix-server
   deploy:
    resources:
@@ -216,7 +216,7 @@ networks:
     name: ${APP_NAME}
 
 volumes:
-  seccomp:
+  snmptraps:
   mysql:
   zabbix_agentd.d:
   zabbix_modules:
