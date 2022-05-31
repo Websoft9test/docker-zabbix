@@ -106,6 +106,9 @@ services:
    com.zabbix.webserver: "apache2"
    com.zabbix.dbtype: "mysql"
    com.zabbix.os: "centos"
+  command: bash -c "cat /my_cmd > cmd.sh && chmod +x /cmd.sh && /cmd.sh"
+  configs:
+    - source: my_cmd
 
  zabbix-agent:
   image: zabbix/zabbix-agent:centos-${APP_VERSION}-latest
@@ -228,3 +231,7 @@ volumes:
   zabbix_export:
   zabbix_mibs:
   apache2:
+
+configs:
+  my_cmd:
+    file: ./cmd.sh
