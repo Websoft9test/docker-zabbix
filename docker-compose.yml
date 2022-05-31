@@ -70,6 +70,7 @@ services:
    - /etc/timezone:/etc/timezone:ro
    - apache2:/etc/ssl/apache2:ro
    - zabbix_modules:/usr/share/zabbix/modules:ro
+   - docker-entrypoint.sh:/usr/bin/docker-entrypoint.sh
   links:
    - mysql:mysql
    - zabbix-server:zabbix-server
@@ -108,7 +109,6 @@ services:
    com.zabbix.webserver: "apache2"
    com.zabbix.dbtype: "mysql"
    com.zabbix.os: "centos"
-  entrypoint: bash -c "cat /my_cmd > /cmd.sh && chmod +x /cmd.sh && /cmd.sh"
   configs:
     - source: my_cmd
 
