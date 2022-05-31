@@ -84,6 +84,7 @@ services:
    - DB_SERVER_PORT=${DB_MYSQL_PORT}
    - MYSQL_ROOT_PASSWORD=${DB_MYSQL_PASSWORD}
    - MYSQL_PASSWORD=${DB_MYSQL_PASSWORD}
+   - APP_PASSWORD=${APP_PASSWORD}
   env_file:
    - ./src/env_vars/.env_web
   depends_on:
