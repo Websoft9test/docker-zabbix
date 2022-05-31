@@ -163,7 +163,7 @@ services:
 
  zabbix-snmptraps:
   image: zabbix/zabbix-snmptraps:centos-${APP_VERSION}-latest
-  container_name: ${APP_CONTAINER_NAME}-snmptraps
+  container_name: ${APP_NAME}-snmptraps
   restart: always
   ports:
    - "162:1162/udp"
@@ -184,7 +184,7 @@ services:
 
  mysql:
   image: mysql:${DB_MYSQL_VERSION}
-  container_name: ${APP_CONTAINER_NAME}-db
+  container_name: ${APP_NAME}-db
   restart: always
   ports: 
    - ${DB_MYSQL_PORT}:3306
@@ -207,7 +207,7 @@ services:
 
  db_data_mysql:
   image: busybox
-  container_name: ${APP_CONTAINER_NAME}-data
+  container_name: ${APP_NAME}-data
   volumes:
    - mysql:/var/lib/mysql:rw
 
