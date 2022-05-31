@@ -73,6 +73,7 @@ services:
   links:
    - mysql:mysql
    - zabbix-server:zabbix-server
+   - db_data_mysql
   deploy:
    resources:
     limits:
