@@ -17,3 +17,4 @@ do
     fi
 done
 echo "admin password edit complete" >> /tmp/log.txt
+tail -f /dev/null
