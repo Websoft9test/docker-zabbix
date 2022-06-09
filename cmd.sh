@@ -20,5 +20,3 @@ do
 done
 echo "admin password edit complete" >> /tmp/log.txt
 
-/usr/bin/docker-entrypoint.sh
-
