@@ -70,6 +70,7 @@ services:
    - /etc/timezone:/etc/timezone:ro
    - apache2:/etc/ssl/apache2:ro
    - zabbix_modules:/usr/share/zabbix/modules:ro
+  user: root
   links:
    - mysql:mysql
    - zabbix-server:zabbix-server
