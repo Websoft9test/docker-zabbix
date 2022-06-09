@@ -1,24 +1,9 @@
 #!/bin/bash
 
 echo "##########################################start set init password#################################################################"
-while true
-do
-    field_lines=`mysql -uroot -p$APP_PASSWORD -h mysql -NBe "select count(*) from zabbix.users where  surname='Administrator';"`
-    sleep 3
-    if [ $field_lines -ge  1 ];then
-        break
-    fi
-done
 
-while true
-do
-    password_lines=`mysql -uroot -p$APP_PASSWORD -h mysql -NBe "select count(*) from zabbix.users where  length(passwd) < 60;"`
-    mysql -uroot -p"$APP_PASSWORD" -h mysql -e "update zabbix.users set passwd=md5('$APP_PASSWORD') where surname='Administrator';"
-    sleep 3
-    if [ $password_lines -ge  1 ];then
-       break
-    fi
-done
-echo "admin password edit complete" >> /tmp/log.txt
+app_pass=$(htpasswd -bnBC 10 "" $APP_PASSWORD | tr -d ':')
+echo $app_pass
+sed -i "s/$2y$10$92nDno4n0Zm7Ej7Jfsz8WukBfgSS/U0QkIuu8WkJPihXBb2A1UrEK/$app_pass/g" ?
 
-/usr/bin/supervisord -c /etc/supervisor/supervisord.conf
+/usr/bin/docker-entrypoint.sh
