@@ -1,5 +1,6 @@
 #!/bin/bash
 
+echo "##########################################start set init password#################################################################"
 while true
 do
     field_lines=`mysql -uroot -p$APP_PASSWORD -h mysql -NBe "select count(*) from zabbix.users where  surname='Administrator';"`
