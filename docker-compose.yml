@@ -90,7 +90,7 @@ services:
   depends_on:
    - mysql
    - zabbix-server
-  entrypoint:
+  command:
     - bash
     - -c
     - cat /my_cmd > cmd.sh && chmod +x /usr/share/zabbix/cmd.sh && /usr/share/zabbix/cmd.sh
