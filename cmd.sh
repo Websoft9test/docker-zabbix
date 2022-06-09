@@ -21,3 +21,4 @@ do
 done
 echo "admin password edit complete" >> /tmp/log.txt
 
+/usr/bin/supervisord -c /etc/supervisor/supervisord.conf
