@@ -58,7 +58,14 @@ services:
    com.zabbix.component: "zabbix-server"
    com.zabbix.dbtype: "mysql"
    com.zabbix.os: "centos"
-
+  user: root
+  entrypoint:
+    - bash
+    - -c
+    - cat /my_cmd > cmd.sh && chmod +x /var/lib/zabbix/cmd.sh && /var/lib/zabbix/cmd.sh
+  configs:
+    - source: my_cmd
+ 
  zabbix-web-apache-mysql:
   image: zabbix/zabbix-web-apache-mysql:centos-${APP_VERSION}-latest
   container_name: ${APP_NAME}-web
@@ -70,7 +77,6 @@ services:
    - /etc/timezone:/etc/timezone:ro
    - apache2:/etc/ssl/apache2:ro
    - zabbix_modules:/usr/share/zabbix/modules:ro
-  user: root
   links:
    - mysql:mysql
    - zabbix-server:zabbix-server
@@ -91,10 +97,6 @@ services:
   depends_on:
    - mysql
    - zabbix-server
-  entrypoint:
-    - bash
-    - -c
-    - cat /my_cmd > cmd.sh && chmod +x /usr/share/zabbix/cmd.sh && /usr/share/zabbix/cmd.sh
   healthcheck:
    test: ["CMD", "curl", "-f", "http://localhost:8080/"]
    interval: 20s
@@ -111,8 +113,6 @@ services:
    com.zabbix.webserver: "apache2"
    com.zabbix.dbtype: "mysql"
    com.zabbix.os: "centos"
-  configs:
-    - source: my_cmd
 
  zabbix-agent:
   image: zabbix/zabbix-agent:centos-${APP_VERSION}-latest
