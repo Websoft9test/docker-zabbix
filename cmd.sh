@@ -2,8 +2,8 @@
 
 echo "##########################################start set init password#################################################################"
 
-app_pass=$(htpasswd -bnBC 10 "" $APP_PASSWORD | tr -d ':')
-echo $app_pass
+#app_pass=$(htpasswd -bnBC 10 "" $APP_PASSWORD | tr -d ':')
+#echo $app_pass
 
 cd /usr/share/doc/zabbix-server-mysql
 gunzip create.sql.gz
