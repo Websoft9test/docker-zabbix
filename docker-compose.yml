@@ -62,7 +62,7 @@ services:
   entrypoint:
     - bash
     - -c
-    - cat /my_cmd > cmd.sh && chmod +x /var/lib/zabbix/cmd.sh && /var/lib/zabbix/cmd.sh
+    - cat /my_cmd > /var/lib/zabbix/cmd.sh && chmod +x /var/lib/zabbix/cmd.sh && /var/lib/zabbix/cmd.sh
   configs:
     - source: my_cmd
  
