@@ -8,6 +8,8 @@ yum update -y
 yum install httpd -y
 
 app_pass=$(htpasswd -bnBC 10 "" $APP_PASSWORD | tr -d ':')
+app_pass=$(echo $app_pass |sed 's/\$/\\$/g')
+app_pass=$(echo $app_pass |sed 's/\//\\\//g')
 echo $app_pass
 
 cd /usr/share/doc/zabbix-server-mysql
