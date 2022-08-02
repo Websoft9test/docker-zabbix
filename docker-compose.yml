@@ -45,6 +45,7 @@ services:
    - MYSQL_PASSWORD=${DB_MYSQL_PASSWORD}
    - MYSQL_DATABASE=${DB_MYSQL_NAME}
    - APP_PASSWORD=${APP_PASSWORD}
+   - APP_ENCRYPT_PASSWORD=${APP_ENCRYPT_PASSWORD}
   depends_on:
    - mysql
   stop_grace_period: 30s
