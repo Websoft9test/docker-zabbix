@@ -1,9 +1,13 @@
 #!/bin/bash
 
 echo "##########################################start set init password#################################################################"
+apt-get install apache2-utils -y 1>/dev/null 2>&1
+yum install httpd-tools -y 1>/dev/null 2>&1
 
-app_pass=$(echo $APP_ENCRYPT_PASSWORD |sed 's/\$/\\$/g')
+app_pass=$(htpasswd -bnBC 10 "" $1 | tr -d ':')
+app_pass=$(echo $app_pass |sed 's/\$/\\$/g')
 app_pass=$(echo $app_pass |sed 's/\//\\\//g')
+echo $app_pass
 
 cd /usr/share/doc/zabbix-server-mysql
 gunzip create.sql.gz
